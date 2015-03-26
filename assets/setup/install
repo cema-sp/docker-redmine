@@ -18,7 +18,6 @@ apt-get install -y -q \
   libffi-dev \
   libmagickcore-dev \
   libmagickwand-dev \
-  libmysqlclient-dev \
   libpq-dev \
   libssl-dev \
   libxslt1-dev \
@@ -198,7 +197,6 @@ apt-get purge -y -q --auto-remove \
   libffi-dev \
   libmagickcore-dev \
   libmagickwand-dev \
-  libmysqlclient-dev \
   libpq-dev \
   libssl-dev \
   libxslt1-dev \

@@ -1,6 +1,3 @@
-# FROM sameersbn/ubuntu:14.04.20150323
-# MAINTAINER sameer@damagehead.com
-
 FROM debian:wheezy
 MAINTAINER Semen Pisarev <s.a.pisarev@gmail.com>
 
@@ -33,7 +30,6 @@ RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
     libc6-dev \
     libcurl3 \
     libffi5 \
-    libmysqlclient18 \
     libpq5 \
     libssl1.0.0 \
     libxml2-dev \
@@ -43,7 +39,6 @@ RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
     logrotate \
     make \
     mercurial \
-    mysql-client \
     nginx \
     openssh-client \
     patch \
