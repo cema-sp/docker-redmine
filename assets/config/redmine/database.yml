@@ -1,7 +1,6 @@
 production:
-  adapter: "{{DB_ADAPTER}}"
-  encoding: "{{DB_ENCODING}}"
-  reconnect: false
+  adapter: postgresql
+  encoding: utf8
   database: "{{DB_NAME}}"
   host: "{{DB_HOST}}"
   port: {{DB_PORT}}

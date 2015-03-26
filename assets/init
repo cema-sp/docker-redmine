@@ -13,14 +13,11 @@ USERCONF_TEMPLATES_DIR="${DATA_DIR}/config"
 
 DB_HOST=${DB_HOST:-}
 DB_PORT=${DB_PORT:-}
-DB_NAME=${DB_NAME:-}
-DB_USER=${DB_USER:-}
+DB_NAME=${DB_NAME:-redmine}
+DB_USER=${DB_USER:-redmine}
 DB_PASS=${DB_PASS:-}
 DB_POOL=${DB_POOL:-5}
 DB_TYPE=${DB_TYPE:-}
-
-MEMCACHED_HOST=${MEMCACHED_HOST:-}
-MEMCACHED_PORT=${MEMCACHED_PORT:-}
 
 SMTP_METHOD=${SMTP_METHOD:-smtp}
 SMTP_DOMAIN=${SMTP_DOMAIN:-www.gmail.com}
@@ -30,10 +27,12 @@ SMTP_USER=${SMTP_USER:-}
 SMTP_PASS=${SMTP_PASS:-}
 SMTP_OPENSSL_VERIFY_MODE=${SMTP_OPENSSL_VERIFY_MODE:-}
 SMTP_STARTTLS=${SMTP_STARTTLS:-true}
+
 if [ -n "${SMTP_USER}" ]; then
   SMTP_ENABLED=${SMTP_ENABLED:-true}
   SMTP_AUTHENTICATION=${SMTP_AUTHENTICATION:-:login}
 fi
+
 SMTP_ENABLED=${SMTP_ENABLED:-false}
 
 REDMINE_PORT=${REDMINE_PORT:-}
@@ -55,80 +54,13 @@ SSL_VERIFY_CLIENT=${SSL_VERIFY_CLIENT:-off}
 UNICORN_WORKERS=${UNICORN_WORKERS:-2}
 UNICORN_TIMEOUT=${UNICORN_TIMEOUT:-60}
 
-# is a mysql or postgresql database linked?
-# requires that the mysql or postgresql containers have exposed
-# port 3306 and 5432 respectively.
-if [ -n "${MYSQL_PORT_3306_TCP_ADDR}" ]; then
-  DB_TYPE=mysql
-  DB_HOST=${DB_HOST:-${MYSQL_PORT_3306_TCP_ADDR}}
-  DB_PORT=${DB_PORT:-${MYSQL_PORT_3306_TCP_PORT}}
-
-  # support for linked sameersbn/mysql image
-  DB_USER=${DB_USER:-${MYSQL_ENV_DB_USER}}
-  DB_PASS=${DB_PASS:-${MYSQL_ENV_DB_PASS}}
-  DB_NAME=${DB_NAME:-${MYSQL_ENV_DB_NAME}}
-
-  # support for linked orchardup/mysql and centurylink/mysql image
-  DB_USER=${DB_USER:-${MYSQL_ENV_MYSQL_USER}}
-  DB_PASS=${DB_PASS:-${MYSQL_ENV_MYSQL_PASSWORD}}
-  DB_NAME=${DB_NAME:-${MYSQL_ENV_MYSQL_DATABASE}}
-elif [ -n "${POSTGRESQL_PORT_5432_TCP_ADDR}" ]; then
+# is a postgresql database linked?
+# requires that the postgresql containers have exposed
+# port 5432
+if [ -n "${POSTGRESQL_PORT_5432_TCP_ADDR}" ]; then
   DB_TYPE=postgres
   DB_HOST=${DB_HOST:-${POSTGRESQL_PORT_5432_TCP_ADDR}}
   DB_PORT=${DB_PORT:-${POSTGRESQL_PORT_5432_TCP_PORT}}
-
-  # support for linked official postgres image
-  DB_USER=${DB_USER:-${POSTGRESQL_ENV_POSTGRES_USER}}
-  DB_PASS=${DB_PASS:-${POSTGRESQL_ENV_POSTGRES_PASS}}
-  DB_NAME=${DB_NAME:-${DB_USER}}
-
-  # support for linked sameersbn/postgresql image
-  DB_USER=${DB_USER:-${POSTGRESQL_ENV_DB_USER}}
-  DB_PASS=${DB_PASS:-${POSTGRESQL_ENV_DB_PASS}}
-  DB_NAME=${DB_NAME:-${POSTGRESQL_ENV_DB_NAME}}
-
-  # support for linked orchardup/postgresql image
-  DB_USER=${DB_USER:-${POSTGRESQL_ENV_POSTGRESQL_USER}}
-  DB_PASS=${DB_PASS:-${POSTGRESQL_ENV_POSTGRESQL_PASS}}
-  DB_NAME=${DB_NAME:-${POSTGRESQL_ENV_POSTGRESQL_DB}}
-
-  # support for linked paintedfox/postgresql image
-  DB_USER=${DB_USER:-${POSTGRESQL_ENV_USER}}
-  DB_PASS=${DB_PASS:-${POSTGRESQL_ENV_PASS}}
-  DB_NAME=${DB_NAME:-${POSTGRESQL_ENV_DB}}
-fi
-
-##
-## For the sake of getting the quick start guide to work,
-## we attempt to spin up a postgresql container if possible.
-##
-## NOTE: this is only meant for getting the quick start guide to work .
-##
-if [ -z "${DB_HOST}" -a -n "$(which docker)" -a -S /var/run/docker.sock ]; then
-  echo "Database connection details not specified."
-  echo "Will try to spin up a new postgresql image with the name postgresql-redmine."
-  echo "Please manually configure the database connection in production."
-  case "$(docker inspect --format {{.State.Running}} postgresql-redmine)" in
-    true)
-      echo "Using existing postgresql container..."
-      ;;
-    false)
-      echo "Starting up existing postgresql container..."
-      docker start postgresql-redmine >/dev/null
-      ;;
-    *)
-      echo "Starting up a new postgresql container..."
-      docker run --name='postgresql-redmine' -d \
-        -e 'DB_USER=redmine' -e 'DB_PASS=password' -e 'DB_NAME=redmine_production' \
-        sameersbn/postgresql:latest >/dev/null
-      ;;
-  esac
-  DB_TYPE=postgres
-  DB_HOST=$(docker inspect --format {{.NetworkSettings.IPAddress}} postgresql-redmine)
-  DB_PORT=5432
-  DB_USER=redmine
-  DB_PASS=password
-  DB_NAME=redmine_production
 fi
 
 if [ -z "${DB_HOST}" ]; then
@@ -138,37 +70,6 @@ if [ -z "${DB_HOST}" ]; then
   echo "  Cannot continue without a database. Aborting..."
   exit 1
 fi
-
-# use default port number if it is still not set
-case "${DB_TYPE}" in
-  mysql) DB_PORT=${DB_PORT:-3306} ;;
-  postgres) DB_PORT=${DB_PORT:-5432} ;;
-  *)
-    echo "ERROR: "
-    echo "  Please specify the database type in use via the DB_TYPE configuration option."
-    echo "  Accepted values are \"postgres\" or \"mysql\". Aborting..."
-    exit 1
-    ;;
-esac
-
-# set the default user and database
-DB_NAME=${DB_NAME:-redmine_production}
-DB_USER=${DB_USER:-root}
-
-# is a memcached container linked?
-if [ -n "${MEMCACHED_PORT_11211_TCP_ADDR}" ]; then
-  MEMCACHE_HOST=${MEMCACHE_HOST:-${MEMCACHED_PORT_11211_TCP_ADDR}}
-  MEMCACHE_PORT=${MEMCACHE_PORT:-${MEMCACHED_PORT_11211_TCP_PORT}}
-fi
-
-# fallback to using the default memcached port 11211
-MEMCACHE_PORT=${MEMCACHE_PORT:-11211}
-
-# enable / disable memcached
-if [ -n "${MEMCACHE_HOST}" ]; then
-  MEMCACHE_ENABLED=true
-fi
-MEMCACHE_ENABLED=${MEMCACHE_ENABLED:-false}
 
 case "${REDMINE_HTTPS}" in
   true)
@@ -238,8 +139,6 @@ sudo -u redmine -H cp ${SYSCONF_TEMPLATES_DIR}/redmine/database.yml config/datab
 sudo -u redmine -H cp ${SYSCONF_TEMPLATES_DIR}/redmine/unicorn.rb config/unicorn.rb
 [ "${SMTP_ENABLED}" == "true" ] && \
 sudo -u redmine -H cp ${SYSCONF_TEMPLATES_DIR}/redmine/smtp_settings.rb config/initializers/smtp_settings.rb
-[ "${MEMCACHE_ENABLED}" == "true" ] && \
-sudo -u redmine -H cp ${SYSCONF_TEMPLATES_DIR}/redmine/additional_environment.rb config/additional_environment.rb
 
 # override default configuration templates with user templates
 case "${REDMINE_HTTPS}" in
@@ -259,19 +158,6 @@ esac
 [ "${MEMCACHE_ENABLED}" == "true" ] && \
 [ -f ${USERCONF_TEMPLATES_DIR}/redmine/additional_environment.rb ] && sudo -u redmine -H cp ${USERCONF_TEMPLATES_DIR}/redmine/additional_environment.rb config/additional_environment.rb
 
-# configure database
-if [ "${DB_TYPE}" == "postgres" ]; then
-  sudo -u redmine -H sed 's/{{DB_ADAPTER}}/postgresql/' -i config/database.yml
-  sudo -u redmine -H sed 's/{{DB_ENCODING}}/unicode/' -i config/database.yml
-  sudo -u redmine -H sed 's/reconnect: false/#reconnect: false/' -i config/database.yml
-elif [ "${DB_TYPE}" == "mysql" ]; then
-  sudo -u redmine -H sed 's/{{DB_ADAPTER}}/mysql2/' -i config/database.yml
-  sudo -u redmine -H sed 's/{{DB_ENCODING}}/utf8/' -i config/database.yml
-  sudo -u redmine -H sed 's/#reconnect: false/reconnect: false/' -i config/database.yml
-else
-  echo "Invalid database type: '$DB_TYPE'. Supported choices: [mysql, postgres]."
-fi
-
 sudo -u redmine -H sed 's/{{DB_HOST}}/'"${DB_HOST}"'/' -i config/database.yml
 sudo -u redmine -H sed 's/{{DB_PORT}}/'"${DB_PORT}"'/' -i config/database.yml
 sudo -u redmine -H sed 's/{{DB_NAME}}/'"${DB_NAME}"'/' -i config/database.yml
@@ -282,13 +168,6 @@ sudo -u redmine -H sed 's/{{DB_POOL}}/'"${DB_POOL}"'/' -i config/database.yml
 # configure secure-cookie if using SSL/TLS
 if [ "${REDMINE_HTTPS}" == "true" ]; then
   sed '/^\s*config\.session_store\s/s/$/, :secure => true/' -i config/application.rb
-fi
-
-# configure memcached
-if [ "${MEMCACHE_ENABLED}" == "true" ]; then
-  echo "Enabling memcache..."
-  sed 's/{{MEMCACHE_HOST}}/'"${MEMCACHE_HOST}"'/' -i config/additional_environment.rb
-  sed 's/{{MEMCACHE_PORT}}/'"${MEMCACHE_PORT}"'/' -i config/additional_environment.rb
 fi
 
 # configure nginx
@@ -396,16 +275,9 @@ fi
 
 # due to the nature of docker and its use cases, we allow some time
 # for the database server to come online.
-case "${DB_TYPE}" in
-  mysql)
-    prog="mysqladmin -h ${DB_HOST} -P ${DB_PORT} -u ${DB_USER} ${DB_PASS:+-p$DB_PASS} status"
-    ;;
-  postgres)
-    prog=$(find /usr/lib/postgresql/ -name pg_isready)
-    prog="${prog} -h ${DB_HOST} -p ${DB_PORT} -U ${DB_USER} -d ${DB_NAME} -t 1"
-    ;;
-esac
 
+prog=$(find /usr/lib/postgresql/ -name pg_isready)
+prog="${prog} -h ${DB_HOST} -p ${DB_PORT} -U ${DB_USER} -d ${DB_NAME} -t 1"
 timeout=60
 echo -n "Waiting for database server to accept connections"
 while ! ${prog} >/dev/null 2>&1
@@ -441,7 +313,8 @@ if [ "${REDMINE_VERSION}" != "${CURRENT_VERSION}" ]; then
   sudo -u redmine -H cp -a Gemfile.lock ${DATA_DIR}/tmp/
 
   echo "Migrating database. Please be patient, this could take a while..."
-  sudo -u redmine -H bundle exec rake db:create RAILS_ENV=production
+  # Database created on PostgreSQL setup
+  # sudo -u redmine -H bundle exec rake db:create RAILS_ENV=production
   sudo -u redmine -H bundle exec rake db:migrate RAILS_ENV=production
 
   # clear sessions and application cache
@@ -474,6 +347,7 @@ ln -sf ${DATA_DIR}/tmp/Gemfile.lock Gemfile.lock
 
 # install user plugins
 if [ -d ${DATA_DIR}/plugins ]; then
+
   echo "Installing plugins..."
   rsync -avq --chown=redmine:redmine ${DATA_DIR}/plugins/ ${INSTALL_DIR}/plugins/
 

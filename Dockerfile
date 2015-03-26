@@ -58,7 +58,7 @@ RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
     zlib1g \
     zlib1g-dev \
   && update-locale LANG=C.UTF-8 LC_MESSAGES=POSIX \
-  && apt-get purge -y -q apt-utils \
+  && apt-get purge -y -q --auto-remove apt-utils \
   && apt-get autoremove -y -q \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
@@ -66,12 +66,12 @@ RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
 RUN echo 'gem: --no-document' >> /etc/gemrc \
   && gem install bundler
 
-ADD assets/setup/ /app/setup/
+COPY assets/setup/ /app/setup/
+COPY assets/config/ /app/setup/config/
 RUN chmod 755 /app/setup/install
 RUN /app/setup/install
 
-ADD assets/config/ /app/setup/config/
-ADD assets/init /app/init
+COPY assets/init /app/init
 RUN chmod 755 /app/init
 
 EXPOSE 80
