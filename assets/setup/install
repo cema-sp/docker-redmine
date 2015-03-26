@@ -42,11 +42,6 @@ sudo -u redmine -H ln -s ${DATA_DIR}/dotfiles/.ssh /home/redmine/.ssh
 rm -rf /home/redmine/.subversion
 sudo -u redmine -H ln -s ${DATA_DIR}/dotfiles/.subversion /home/redmine/.subversion
 
-# Copy certs to home ${DATA_DIR}/certs
-mkdir -p ${DATA_DIR}/certs/
-cp -r ${SETUP_DIR}/certs/* ${DATA_DIR}/certs/
-chmod 400 ${DATA_DIR}/certs/redmine.key
-
 # install redmine, use local copy if available
 mkdir -p ${INSTALL_DIR}
 if [ -f ${SETUP_DIR}/redmine-${REDMINE_VERSION}.tar.gz ]; then

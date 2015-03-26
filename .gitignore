@@ -4,7 +4,10 @@
 *.gem
 
 # Ignore certs
-assets/setup/certs/*
+*/certs/*
+
+# Ignore /data
+data/*
 
 # Not ignore .gitkeep files
-!*/.gitkeep
+!**/.gitkeep
