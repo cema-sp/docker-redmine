@@ -9,5 +9,8 @@
 # Ignore /data
 data/*
 
+# Ignore sensitive data
+docker-compose.yml
+
 # Not ignore .gitkeep files
 !**/.gitkeep

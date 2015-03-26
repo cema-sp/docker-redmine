@@ -1,0 +1,24 @@
+postgresql:
+  image: cema/postgres
+  environment:
+   - REDMINE_PASSWORD=password
+  ports:
+   - "5432:5432"
+  volumes:
+   - /opt/containers/postgres/backups:/backups # Backups
+  restart: always
+redmine:
+  image: cema/redmine
+  hostname: redmine
+  domainname: example.com
+  links:
+   - postgresql:postgresql
+  environment:
+   - DB_PASS=password
+   - REDMINE_HTTPS=true
+   - REDMINE_HTTPS_HSTS_MAXAGE=2592000
+  ports:
+   - "10080:80"
+   - "10443:443"
+  volumes:
+   - /opt/docker/redmine/data:/home/redmine/data # Data directory
