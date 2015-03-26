@@ -1,0 +1,75 @@
+<% settings = (Setting.plugin_usability || {}) %>
+<%# Passing plugin settings from server to client %>
+<script type="text/javascript">
+// <![CDATA[
+  RMPlus.Usability = (function(my){
+    var my = my || {};
+
+    my.settings = <%= settings.to_json.html_safe %>;
+
+    my.galleryPopupSettings = {
+      type: 'image',
+      gallery: {
+        enabled: true,
+        navigateByImgClick: true,
+
+        midClick: false,
+
+        arrowMarkup: '<button title="%title%" type="button" class="mfp-arrow mfp-arrow-%dir%"></button>',
+        tPrev: '<%= l(:magnificPopup_tPrev) %>',
+        tNext: '<%= l(:magnificPopup_tNext) %>',
+        tCounter: '<%= l(:magnificPopup_tCounter).html_safe %>'
+      },
+      image: {
+        tError: '<%= l(:magnificPopup_tError).html_safe %>'
+      },
+      ajax: {
+       tError: '<%= l(:magnificPopup_ajax_tError).html_safe %>'
+      },
+      tClose: '<%= l(:magnificPopup_tClose) %>',
+      tLoading: '<%= l(:magnificPopup_tLoading) %>'
+    };
+
+    return my;
+  })(RMPlus.Usability || {});
+
+  <% if (Setting.plugin_usability || {})['custom_help_url'].to_s != '' %>
+
+    $(document).ready( function () {
+      $("#top-menu a.help:first").attr("href", "<%= Setting.plugin_usability['custom_help_url'] %>");
+    });
+
+  <% end %>
+// ]]>
+</script>
+
+<%= javascript_include_tag :raphael %>
+<%= javascript_include_tag 'pie-chart', plugin: :usability %>
+<%= javascript_include_tag 'usability.js', plugin: :usability %>
+<%= stylesheet_link_tag 'usability.css', plugin: :usability %>
+
+<% if settings[:enable_underlined_links] %>
+  <%= stylesheet_link_tag 'usability-links.css', plugin: :usability %>
+<% end %>
+
+<% if (!controller.nil? && controller.controller_name == 'settings' && controller.action_name == 'plugin') && params[:id] == 'usability' %>
+  <%= stylesheet_link_tag 'settings', plugin: 'a_common_libs', media: 'screen' %>
+<% end %>
+
+<% if ['issues', 'sd_requests', 'kpi', 'kpi_user_surcharges'].include?(controller.controller_name) %>
+  <%= javascript_include_tag 'jquery.magnific-popup.min.js', plugin: :usability %>
+  <%= stylesheet_link_tag 'magnific-popup.css', plugin: :usability %>
+<% end %>
+
+
+<% if (Setting.plugin_usability || {})['show_sidebar_close_button'].to_s != '' && (Setting.plugin_usability || {})['usability_sidebar_width'].to_i > 0 %>
+<style type="text/css">
+  #content {
+    margin-right: <%= (Setting.plugin_usability || {})['usability_sidebar_width'].to_i+(Setting.plugin_usability || {})['usability_sidebar_gap'].to_i %>px;
+    width: auto;
+  }
+  #sidebar {
+    width: <%= (Setting.plugin_usability || {})['usability_sidebar_width'].to_i %>px;
+  }
+</style>
+<% end %>

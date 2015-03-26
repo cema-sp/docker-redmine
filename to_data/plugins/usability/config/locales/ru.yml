@@ -1,0 +1,94 @@
+# English strings go here for Rails i18n
+ru:
+  documents: "Документы"
+  custom_help_url: "Ссылка на страницу помощи"
+  mouse_click: "Клик мыши"
+  mouse_over: "Наведение мыши"
+  all_projects: "Все проекты"
+  appearance_and_usability: "Внешний вид и удобство использования"
+  select_an_event_to_open_the_pop_up_menu: "Выберите событие для открытия вспомогательного меню"
+  go_to_project_issues: "Перейти к заданиям проекта"
+
+  settings_ask_users_at_error: "К кому обратиться при ошибке"
+  settings_usability_sidebar_width: "Ширина бокового меню (px)"
+  settings_usability_sidebar_gap: "Отступ бокового меню (px)"
+  label_usability_settings_sidebar: "Параметры бокового меню"
+
+  label_usability_settings_new_request_params: "Параметры новых заявок пользователей"
+  settings_behaviour_on_errors: "Параметры поведения при ошибках в Redmine"
+
+  settings_disable_default_preloader: "Отключить штатный прелоадер Redmine."
+
+  settings_show_sidebar_close_button: "Позволить скрывать боковое меню."
+  settings_enable_underlined_links: "Вставлять дополнительные теги при загрузке страницы, чтобы обеспечить более хорошее подчеркивание ссылок (требуется <a href='https://bitbucket.org/dkuk/redmine_alex_skin'>наш скин для Redmine</a>)."
+  settings_remove_project_page_header_breadcrumb: "Не показывать родительские проекты в заголовке страницы проекта."
+  settings_dont_render_project_jump_box: "Убрать встроенную возможность быстрого перехода в проект."
+  settings_usability_progress_bar_type: "Вид отображения процента готовности"
+  settings_default_page: "Страница по умолчанию"
+  settings_enable_custom_default_page: 'Включить страницу по умолчанию (если не указано ничего, то будет использована <a href="/my/page">Моя страница</a>).'
+  settings_enable_easy_rm_tasks: 'Включить упрощенный механизм создания задания подчиненному'
+  settings_easy_perplex_executor_roles: 'Роли, использующиеся для определения исполнителя в проекте'
+  settings_easy_perplex_cf_customer_id: 'Настраиваемое поле, используемое в качестве заказчика в задаче'
+  settings_enable_download_attachments_all_in_one: 'Загружать вложения одним архивом'
+
+  warning_error_occured: "Redmine. Ошибка %{status}"
+  label_create_request: "Создать заявку"
+  label_go_back: "Назад"
+  label_error_log: "Лог ошибки"
+
+  label_iform_admin: "Пожалуйста, сообщите об ошибке администратору"
+  label_usability_settings_user_custom_details: "Настройки своей странички о пользователе"
+  label_usability_settings_default_page: "Настройки страницы по умолчанию"
+  label_usability_settings_select_ajax_preloader: "Выбор прелоадера для AJAX-запросов"
+  label_usability_settings_common: "Общие настройки"
+
+  label_usability_settings_easy_perplex: 'Настройки упрощенного механизма создания задания подчиненному'
+
+  label_usability_easy_perplex_menu: 'Озадачить'
+  label_usability_easy_perplex_modal_header: 'Озадачить своего непосредственного подчиненного'
+  label_usability_easy_perplex_modal_cancel: 'Отмена'
+  label_usability_easy_perplex_select_subordinate: 'Выберите подчиненного'
+  label_usability_easy_perplex_subordinate: 'Кого вы хотите озадачить?'
+  label_usability_easy_perplex_subordinate_description: 'Начните набирать фамилию и выберите подчиненного из списка'
+  label_usability_easy_perplex_issues_header: 'Создать задание'
+  label_usability_easy_perplex_issues_description: 'Назначить ограниченное во времени (с конкретными сроками) на выбранного исполнителя (%{user}) задание.'
+  label_usability_easy_perplex_sd_requests_header: 'Создать заявку'
+  label_usability_easy_perplex_sd_requests_description: 'Отправить свою хотелку выбранному сотруднику (%{user}), позволить сотруднику самому запланировать сроки, определить приоритеты и назначить исполнителей.'
+  label_usability_easy_perplex_create_issue: '<strong>%{project}</strong>. Создать задачу.'
+  label_usability_easy_perplex_create_request: '%{department}. Создать заявку'
+  label_usability_easy_perplex_contact_to: 'Обратитесь к'
+
+  text_usability_easy_perplex_no_subordinates: 'К сожалению, в данный момент у вас нет подчиненных!'
+  text_usability_easy_perplex_ldap_was_not_installed: 'Функциональность недоступна, необходимо установить плагин «ldap_users_sync»'
+  text_usability_easy_perplex_wrong_user: 'Сотрудник не найден'
+  text_usability_easy_perplex_does_not_subordinate: 'Сотрудник %{user} не является вашим непосредственным подчиненным.'
+  text_usability_easy_perplex_you_are_not_participant_of_any_project: 'Вы не являетесь участником ни в одном проекте, в котором %{user} может быть исполнителем'
+  text_usability_easy_perplex_subordinate_is_not_participant_of_any_project: 'Вы не можете назначить задачу на сотрудника %{user}, поскольку сотрудник не является исполнителем ни в одном проекте.'
+  text_usability_easy_perplex_subordinate_is_not_participant_of_any_service_desk: 'Сотрудник %{user} не может принимать и обрабатывать заявки. Обратитесь к администратору Redmine для настройки обслуживающего подразделения.'
+
+  label_usability_download_all_in_one: 'Скачать вложения одним архивом'
+  label_usability_settings_totals_in_queries: 'Выводить сумму по столбцам в запросах'
+
+  label_rmplus_logo: "Данный плагин разработан командой «RM+». Вы всегда можете найти другие наши плагины на сайте"
+
+  magnificPopup_tPrev: "Назад"
+  magnificPopup_tNext: "Вперед"
+  magnificPopup_tCounter: "<span class=\"mfp-counter\">%curr% из %total%</span>"
+  magnificPopup_tError: "<a href=\"%url%\">Изображение</a> не может быть загружено."
+  magnificPopup_ajax_tError: "Ошибка <a href=\"%url%\">запроса</a> к серверу."
+  magnificPopup_tClose: "Закрыть (Esc)"
+  magnificPopup_tLoading: "Загрузка..."
+  us_of_issue: "Задачу"
+  label_dmsf: "Документы"
+  usability_pb_std: "Стандартный"
+  usability_pb_tiny: "Маленький"
+  usability_pb_pie: "Сектор"
+  usability_pb_tor: "Бублик"
+
+  label_usability_settings_replace_login_page: "Заменить страницу входа в систему"
+  label_usability_close: 'Закрыть'
+  label_ask_for: "Вы можете обратяться к"
+  info_custom_help_url: "Подменяет ссылку помощи с redmine.org на свою страницу. Для использования wiki странички из проекта ссылка должна быть вида: ../../../../projects/project_identifier/wiki/wiki_page_name"
+  info_default_page: "После входа пользователь перенаправляется на страницу по умолчанию. Можно заменить любым ресурсом в Redmine, заданным относительной ссылкой, например: /my/page, /issues и т.п."
+  field_email: "e-mail"
+

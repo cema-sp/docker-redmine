@@ -1,0 +1,14 @@
+RMPlus.Usability.show_flashes('<%= flash[:error] %>', '<%= flash[:notice] %>')
+<% flash.delete(:error); flash.delete(:notice) %>
+
+<% if (!@unders.nil? && @unders != [ ]) %>
+  $('#easy-perplex-modal-window').html("<%= escape_javascript(render partial: 'easy_perplex_modal') %>");
+  $('#us-subordinates-select2').select2({
+    placeholderOption: 'first',
+    allowClear: true
+  });
+  $(window).trigger("resize");
+  // $('#group-set-modal-window').on('hidden', function ( ) {
+
+  // });
+<% end %>

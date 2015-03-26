@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title><%=h html_title %></title>
+<meta name="description" content="<%= Redmine::Info.app_name %>" />
+<meta name="keywords" content="issue,bug,tracker" />
+<%= csrf_meta_tag %>
+<%= favicon %>
+<%= javascript_heads %>
+<% if Redmine::Plugin::registered_plugins.include?(:ldap_users_sync) %>
+  <%= stylesheet_link_tag 'ldap_users_sync.css', :plugin => :ldap_users_sync %>
+<% end %>
+<% if Redmine::Plugin::registered_plugins.include?(:a_common_libs) %>
+  <%= stylesheet_link_tag 'a_common_styles.css', :plugin => :a_common_libs %>
+<% end %>
+<%= stylesheet_link_tag 'bootstrap_buttons_alerts.css', :plugin => :usability %>
+<%= stylesheet_link_tag 'usability.css', :plugin => :usability %>
+</head>
+<style type="text/css">
+img.gravatar {
+  padding: 2px;
+  border: 1px solid #D5D5D5;
+  background: none repeat scroll 0% 0% #FFF;
+  vertical-align: middle;
+}
+
+.btn {
+  height: auto;
+}
+.us_ask_user {
+  margin-top: 15px;
+}
+a.in_link {
+  text-decoration: underline;
+}
+.ld_user_inf {
+  margin: 0;
+  line-height: 1.3;
+}
+.ld_user_name {
+  margin: 0;
+  line-height: 1.3;
+}
+</style>
+
+<body>
+<div id="err_usability_warn" style="width: 100%; top:50px; position: absolute;">
+  <div style="margin: 0 50%; min-width: 800px;">
+    <div class="alert alert-warning H" style="margin: 0 -50%; width: 100%;">
+      <h2><%= l(:warning_error_occured, :status => @status) %></h2>
+      <div style="float:left;"><%= image_tag('global_error.png', :plugin => :usability) %></div>
+      <div style="padding-left: 140px;">
+        <strong><%= @err_msg %></strong>
+        <br><br>
+        <% if Redmine::Plugin::registered_plugins.include?(:service_desk) && !User.current.anonymous? %>
+          <a id="us_req_link" class="btn btn-warning bt20" href="#">
+            <span><%= l(:label_create_request) %></span>
+          </a>
+          <%= form_tag({:controller => 'sd_requests', :action => 'new'}, :method => 'post', :id => 'new_request_form', :style => 'display:none;') do |f| %>
+            <%= hidden_field_tag('sd_request[title]', l(:warning_error_occured, :status => @status)+'. '+@err_msg) %>
+            <%= hidden_field_tag('sd_request[description]', @err_info) %>
+            <%= hidden_field_tag('sd_request[sd_request_type_id]', Setting.plugin_usability['request_type']) %>
+            <%= hidden_field_tag('sd_request[target_department_id]', Setting.plugin_usability['target_department']) %>
+            <%= hidden_field_tag('sd_request[sd_request_priority_id]', '4') %>
+            <%= hidden_field_tag('sd_request[due_date]', Date.today.to_s) %>
+          <% end %>
+        <% end %>
+        <a id="us_back_link" class="btn btn-warning bt20" href="javascript:history.back()" style="overflow: hidden; height: auto;">
+          <span><%= l(:label_go_back) %></span>
+        </a>
+        <br><br>
+
+        <% if @users.any? %>
+          <% if Redmine::Plugin::registered_plugins.include?(:ldap_users_sync) %>
+            <div class="us_ask_label"><strong><%= l(:label_iform_admin) %>:</strong></div>
+            <% @users.each do |u| %>
+              <div class="us_ask_user">
+                <%= show_user_info(u, [:name,:phones,:email]) %>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="uc_ask_label"><%= l(:label_ask_for) %>: </div>
+              <% @users.each do |user| %>
+                <div class="ld_user_info">
+                  <div class="ld_user_avatar L">
+                    <%= avatar(user, {size: '50'}) %>
+                  </div>
+                  <div class="H us_info_block">
+                    <div class="ld_user_name"><%= link_to_user(user) %></div>
+                    <div class="ld_user_inf ld_user_mail"><%= l(:field_email) %> : <%= link_to(user.mail, 'mailto:'+user.mail, class: 'in_link ld_mail_link') %></div>
+                  </div>
+                </div>
+              <% end %>
+          <% end %>
+        <% end %>
+      </div>
+  </div>
+    <div class="alert alert-danger us_error_details H" style="margin: 10px -50%; width: 100%;">
+      <h3><%= l(:label_error_log) %></h3>
+      <pre>
+        <%= @err_info.lstrip %>
+      </pre>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+  .us_ask_user {
+    margin-top: 7px;
+    line-height: 1;
+  }
+  .ld_user_inf {
+    line-height: 1.2;
+  }
+</style>
+
+<script type="text/javascript">
+$(document).ready(function () {
+  uc_center_warn();
+
+  $('#us_req_link').click(function () {
+    $('#new_request_form').submit();
+    return false;
+  });
+});
+
+function uc_center_warn () {
+  var warn_height = $('#err_usability_warn').outerHeight();
+  var w_height = $(window).height();
+  var top = 0
+  if(w_height > warn_height){
+    top = (w_height-warn_height)/2;
+  }
+  $('#err_usability_warn').css('top', top.toString()+'px');
+}
+</script>
+</body>
+</html>
