@@ -20,6 +20,7 @@ RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
   && apt-get -q update \
   && apt-get install -y -q \
     bzr \
+    cmake \
     cvs \
     curl \
     g++ \
@@ -74,6 +75,8 @@ EXPOSE 443
 
 VOLUME ["/home/redmine/data"]
 VOLUME ["/var/log/redmine"]
+
+VOLUME ["/redmine-gitolite"]
 
 WORKDIR /home/redmine/redmine
 ENTRYPOINT ["/app/init"]
