@@ -1,0 +1,82 @@
+contact_queries_002:
+  id: 2
+  project_id: 1
+  <% if Redmine::VERSION.to_s < '2.4' %>
+  is_public: false
+  <% else %>
+  visibility: 2
+  <% end %>
+  type: ContactQuery
+  name: Private contacts query for cookbook
+  filters: |
+    ---
+    first_name:
+      :values:
+      - "Ivan"
+      :operator: "="
+    last_name:
+      :values:
+      - "Ivanov"
+      :operator: "="
+
+  user_id: 3
+contact_queries_003:
+  id: 3
+  project_id:
+  <% if Redmine::VERSION.to_s < '2.4' %>
+  is_public: false
+  <% else %>
+  visibility: 2
+  <% end %>
+  type: ContactQuery
+  name: Private query for all projects
+  filters: |
+    ---
+    first_name:
+      :values:
+      - "Ivan"
+      :operator: "="
+
+  user_id: 3
+contact_queries_004:
+  id: 4
+  project_id:
+  <% if Redmine::VERSION.to_s < '2.4' %>
+  is_public: true
+  <% else %>
+  visibility: 0
+  <% end %>
+  type: ContactQuery
+  name: Public query for all projects
+  filters: |
+    ---
+    first_name:
+      :values:
+      - "Ivan"
+      :operator: "="
+
+  user_id: 2
+contact_queries_005:
+  id: 5
+  project_id:
+  <% if Redmine::VERSION.to_s < '2.4' %>
+  is_public: true
+  <% else %>
+  visibility: 0
+  <% end %>
+  type: ContactQuery
+  name: Open contacts by tags
+  filters: |
+    ---
+    tags:
+      :values:
+      - "main"
+      :operator: "="
+
+  user_id: 1
+  sort_criteria: |
+    ---
+    - - first_name
+      - desc
+    - - last_name
+      - asc

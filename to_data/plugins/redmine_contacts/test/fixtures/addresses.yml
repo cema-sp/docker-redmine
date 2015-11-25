@@ -1,0 +1,18 @@
+address_1:
+    id: 1
+    city: New York
+    country_code: US
+    region: NY
+    street1: "1443A 5th Ave"
+    postcode: 10035
+    addressable_type: Contact
+    addressable_id: 2
+
+address_2:
+    id: 2
+    city: Moscow
+    country_code: RU
+    street1: "Bolshaya Yakimanka, 2"
+    postcode: 103234
+    addressable_type: Contact
+    addressable_id: 3

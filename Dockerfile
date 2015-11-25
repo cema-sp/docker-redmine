@@ -19,10 +19,11 @@ RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
     /etc/apt/sources.list.d/nginx.list \
   && apt-get -q update \
   && apt-get install -y -q \
+    build-essential \
     bzr \
     cmake \
-    cvs \
     curl \
+    cvs \
     g++ \
     gcc \
     git \
@@ -31,7 +32,10 @@ RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
     libc6-dev \
     libcurl3 \
     libffi5 \
+    libgpg-error-dev \
     libpq5 \
+    libssh2-1 \
+    libssh2-1-dev \
     libssl1.0.0 \
     libxml2-dev \
     libxslt1.1 \
@@ -42,7 +46,9 @@ RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
     mercurial \
     nginx \
     openssh-client \
+    openssh-server \
     patch \
+    perl \
     pkg-config \
     postgresql-client \
     rsync \
@@ -59,24 +65,59 @@ RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
+# ------------- Gitolite ----------------------------
+
+WORKDIR /gitolite
+
+# To avoid annoying "perl: warning: Setting locale failed." errors,
+# do not allow the client to pass custom locals, see:
+# http://stackoverflow.com/a/2510548/15677
+# http://stackoverflow.com/questions/22547939/docker-gitlab-container-ssh-git-login-error
+RUN sed -i '/^AcceptEnv LANG LC_\*$/d' /etc/ssh/sshd_config \
+  && sed -i '/session\s*required\s*pam_loginuid.so/d' /etc/pam.d/sshd
+
+RUN mkdir /var/run/sshd
+
+# RUN adduser --system --group --shell /bin/sh git
+
+# RUN su git -c "mkdir /home/git/bin"
+
+RUN git clone --progress -v git://github.com/sitaramc/gitolite . \
+  && ./install -ln /usr/local/bin
+
+# https://github.com/docker/docker/issues/5892
+# RUN chown -R git:git /gitolite /home/git
+
+# Addind volume for repositories directory
+VOLUME /repositories
+
+# ------------- Redmine -----------------------------
+
 RUN echo 'gem: --no-document' >> /etc/gemrc \
   && gem install bundler
 
-COPY assets/setup/ /app/setup/
-COPY assets/config/ /app/setup/config/
-RUN chmod 755 /app/setup/install
-RUN /app/setup/install
+WORKDIR /app
 
-COPY assets/init /app/init
-RUN chmod 755 /app/init
+COPY assets/setup/ setup/
+COPY assets/config/ setup/config/
 
+# Redmine version for plugins compatibility
+ENV REDMINE_VERSION 2.6.3
+
+RUN chmod 755 setup/install
+RUN setup/install
+
+COPY assets/init init
+RUN chmod 755 init
+
+EXPOSE 22
 EXPOSE 80
 EXPOSE 443
 
-VOLUME ["/home/redmine/data"]
-VOLUME ["/var/log/redmine"]
-
-VOLUME ["/redmine-gitolite"]
+# Adding volume for redmine configuration files
+VOLUME /home/redmine/data
+# Adding volume for log files storage
+VOLUME /var/log/redmine
 
 WORKDIR /home/redmine/redmine
 ENTRYPOINT ["/app/init"]

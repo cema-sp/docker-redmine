@@ -1,0 +1,9 @@
+api.array :tags, api_meta(:total_count => @tags.count) do
+  @tags.each do |tag|
+    api.tag do
+  	  api.id tag.id
+      api.name tag.name
+  	  api.color tag_color(tag.name)
+    end
+  end
+end

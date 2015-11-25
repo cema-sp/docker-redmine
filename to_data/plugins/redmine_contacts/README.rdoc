@@ -1,0 +1,46 @@
+= Contacts plugin
+
+== Install
+
+* Copy redmine_contacts plugin to {RAILS_APP}/plugins on your redmine path
+* Run bundle install --without development test RAILS_ENV=production
+* Run rake redmine:plugins NAME=redmine_contacts RAILS_ENV=production
+
+== Uninstall
+
+<pre>
+rake redmine:plugins NAME=redmine_contacts VERSION=0 RAILS_ENV=production
+rm -r plugins/redmine_contacts
+</pre>
+
+=== Tables created by CRM plugin
+
+* contacts
+* contacts_deals
+* contacts_issues
+* contacts_projects
+* deals
+* deal_categories
+* deal_processes
+* deal_statuses
+* deal_statuses_projects
+* notes
+* tags
+* taggings
+* recently_vieweds
+* contacts_settings
+* contacts_queries
+* addresses
+* deals_issues
+
+== Requirements
+
+* Redmine 2.3+
+
+== Test
+bundle exec rake db:drop db:create db:migrate redmine:plugins RAILS_ENV=test_sqlite3
+bundle exec rake test TEST="plugins/redmine_contacts/test/**/*_test.rb" RAILS_ENV=test_sqlite3
+
+=== Test API
+
+curl -v -H "Content-Type: application/xml" -X POST --data "@contact.xml" -u admin:admin http://localhost:3000/contacts.xml

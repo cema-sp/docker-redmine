@@ -1,0 +1,17 @@
+%h2= l(:label_repository)
+
+.container
+  .row
+    .col-md-12= call_hook(:view_repository_edit_top)
+
+.container
+  .row
+    .col-md-6
+      = labelled_form_for :repository, @repository, url: repository_path(@repository), html: { method: :put, id: 'repository-form' } do |f|
+        = render 'form', f: f
+
+    .col-md-6{ id: 'xitolite-options' }= render 'xitolite_options', repository: @repository
+
+.container
+  .row
+    .col-md-12= call_hook(:view_repository_edit_bottom)

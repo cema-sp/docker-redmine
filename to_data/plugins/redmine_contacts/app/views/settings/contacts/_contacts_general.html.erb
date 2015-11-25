@@ -1,0 +1,56 @@
+<p>
+  <label><%= l(:label_crm_user_format) %></label>
+  <%= select_tag 'settings[name_format]', options_for_select(Contact::CONTACT_FORMATS.collect{|key, value| [key, value[:setting_order]]}.sort{|a, b| a[1] <=> b[1]}.collect{|f| [Contact.new(:first_name => 'Firstname', :last_name => 'Lastname', :middle_name => 'Middlename').name(f[0]), f[0].to_s]}, @settings[:name_format] ) %>
+</p>
+
+<p>
+  <label><%= l(:label_crm_post_address_format) %></label>
+  <%= text_area_tag  'settings[post_address_format]', ContactsSetting.post_address_format, :rows => 5 %>
+  <em class="info"><%= l(:label_crm_post_address_format_macros, :macros => '%street1%, %street2%, %city%, %town%, %postcode%, %zip%, %region%, %state%, %country%') %></em>
+</p>
+
+<p>
+  <label><%= l(:label_crm_default_country) %></label>
+  <%= select_tag  'settings[default_country]', options_for_select(countries_for_select, ContactsSetting.default_country) %>
+</p>
+
+<p>
+  <label><%= l(:label_crm_show_in_top_menu) %></label>
+  <span id="watchers_inputs">
+    <span class="floating" style="margin-left: 0px;">
+    <%= check_box_tag 'settings[contacts_show_in_top_menu]', 1, @settings[:contacts_show_in_top_menu] %>
+    <%= l(:label_contact_plural) %>
+    </span>
+  </span>
+</p>
+
+<p>
+  <label><%= l(:label_crm_show_in_app_menu) %></label>
+  <span id="watchers_inputs">
+    <span class="floating" style="margin-left: 0px;">
+    <%= check_box_tag 'settings[contacts_show_in_app_menu]', 1, @settings[:contacts_show_in_app_menu] %>
+    <%= l(:label_contact_plural) %>
+    </span>
+  </span>
+</p>
+
+
+<p>
+  <label><%= l(:label_crm_contact_note_authoring_time) %></label>
+  <%= check_box_tag 'settings[note_authoring_time]', 1, @settings[:note_authoring_time] %>
+</p>
+
+<p>
+  <label><%= l(:label_crm_contact_show_in_app_menu) %></label>
+  <%= check_box_tag 'settings[show_in_app_menu]', 1, @settings[:show_in_app_menu] %>
+</p>
+
+<p>
+  <label><%= l(:label_crm_contact_show_closed_issues) %></label>
+  <%= check_box_tag 'settings[show_closed_issues]', 1, @settings[:show_closed_issues] %>
+</p>
+
+<p>
+  <label><%= l(:label_crm_monochrome_tags) %></label>
+  <%= check_box_tag 'settings[monochrome_tags]', 1, @settings[:monochrome_tags] %>
+</p>

@@ -3,6 +3,7 @@
 
 upstream redmine {
   server unix:{{INSTALL_DIR}}/tmp/sockets/redmine.socket fail_timeout=0;
+#  server 127.0.0.1:8080 fail_timeout=0;
 }
 
 ## Normal HTTP host
@@ -15,7 +16,7 @@ server {
   ## Increase this if you want to upload large attachments
   client_max_body_size {{NGINX_MAX_UPLOAD_SIZE}};
 
-  ## Individual nginx logs for this GitLab vhost
+  ## Individual nginx logs for this Redmine vhost
   access_log  /var/log/redmine/nginx/redmine_access.log;
   error_log   /var/log/redmine/nginx/redmine_error.log;
 

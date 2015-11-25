@@ -1,0 +1,85 @@
+<div class="contextual">
+    <%= link_to_if_authorized l(:label_crm_contact_new), {:controller => 'contacts', :action => 'new', :project_id => @project}, :class => 'icon icon-add' %>
+    <%= call_hook(:view_contacts_action_menu) %>
+</div>
+
+
+<% html_title(@query.new_record? ? l(:label_contact_plural) : @query.name) %>
+
+
+<%= form_tag({ :controller => 'contacts', :action => 'index', :project_id => @project }, :method => :get, :id => 'query_form') do %>
+    <script type="text/javascript">
+       jQuery(function($) {
+          // when the #search field changes
+          $("#search").observe_field(2, function() {
+            var form = $("#query_form"); // grab the form wrapping the search bar.
+            var url = form.attr("action");
+            form.find('[name="c[]"] option').each(function(i, elem){
+              $(elem).attr('selected', true)
+            })
+            var formData = form.serialize();
+            form.find('[name="c[]"] option').each(function(i, elem){
+              $(elem).attr('selected', false)
+            })
+            $.get(url, formData, function(data) { // perform an AJAX get, the trailing function is what happens on successful get.
+                $("#contact_list").html(data); // replace the "results" div with the result of action taken
+            });
+          });
+        });
+    </script>
+
+    <h2 class="contacts_header">
+        <span id='scope_header' class="scope_title">
+        <%= @query.new_record? ? l(:label_contact_plural) : h(@query.name) %>
+        </span>
+
+        <span class="live_search">
+            <%= text_field_tag(:search, params[:search], :autocomplete => "off", :class => "live_search_field", :placeholder => l(:label_crm_contact_search) ) %>
+
+        </span>
+
+        <span class="tags">
+            <%= tag_links(@filter_tags) %>
+        </span>
+
+    </h2>
+
+    <%= hidden_field_tag 'set_filter', '1' %>
+    <%= hidden_field_tag 'object_type', 'contact' %>
+
+<% end %>
+
+<%= error_messages_for 'query' %>
+<% if @query.valid? %>
+    <div id="contact_list">
+    <% if @contacts.empty? %>
+        <p class="nodata"><%= l(:label_no_data) %></p>
+    <% else %>
+      <%= render :partial => contacts_list_style %>
+      <p class="pagination"><%= pagination_links_full @contacts_pages, @contacts_count %></p>
+    <% end %>
+    </div>
+    <% other_formats_links do |f| %>
+        <%= f.link_to 'Atom', :url => params.merge(:key => User.current.rss_key) %>
+    <% end if User.current.allowed_to?(:export_contacts, @project, :global => true) %>
+<% end %>
+
+
+<% content_for :sidebar do %>
+    <%= render :partial => 'common/sidebar' %>
+    <%= render :partial => 'tags_cloud', :object => @tags %>
+    <%= render :partial => 'notes/last_notes', :object => @last_notes %>
+    <%= render :partial => 'common/recently_viewed' %>
+
+    <%= call_hook(:view_contacts_sidebar_contacts_list_bottom) %>
+
+<% end %>
+
+<% content_for(:header_tags) do %>
+    <%= javascript_include_tag :contacts, :plugin => 'redmine_contacts'  %>
+    <%= stylesheet_link_tag :contacts_sidebar, :plugin => 'redmine_contacts' %>
+    <%= auto_discovery_link_tag(:atom, {:format => 'atom', :key => User.current.rss_key}, :title => l(:label_contact_plural)) %>
+
+<% end %>
+
+<%= context_menu url_for( {:controller => "contacts", :action => "context_menu"} )%>

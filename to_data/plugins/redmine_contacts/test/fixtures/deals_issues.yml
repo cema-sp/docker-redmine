@@ -1,0 +1,10 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+di_001:
+  issue_id: 1
+  deal_id: 1
+di_002:
+  issue_id: 2
+  deal_id: 2
+di_003:
+  issue_id: 3
+  deal_id: 2

@@ -1,0 +1,27 @@
+cat << EOF > /tmp/gitolite-fix
+
+BEGIN {
+  exit 0 if exists \$ENV{GL_BYPASS_UPDATE_HOOK};
+}
+
+EOF
+
+# mkdir -p /home/git/bin/lib/Gitolite/Hooks/
+# cat /tmp/gitolite-fix >> /home/git/bin/lib/Gitolite/Hooks/Update.pm
+# sed -i 's/{GL_BYPASS_UPDATE_HOOK}/$ENV{GL_BYPASS_UPDATE_HOOK}/' /home/git/bin/lib/Gitolite/Hooks/Update.pm
+
+# mkdir -p /home/git/gitolite/src/lib/Gitolite/Hooks/
+# cat /tmp/gitolite-fix >> /home/git/gitolite/src/lib/Gitolite/Hooks/Update.pm
+# sed -i 's/{GL_BYPASS_UPDATE_HOOK}/$ENV{GL_BYPASS_UPDATE_HOOK}/' /home/git/gitolite/src/lib/Gitolite/Hooks/Update.pm
+
+# mkdir -p /home/git/.gitolite/hooks/common/
+# cat /tmp/gitolite-fix >> /home/git/.gitolite/hooks/common/update
+# sed -i 's/{GL_BYPASS_UPDATE_HOOK}/$ENV{GL_BYPASS_UPDATE_HOOK}/' /home/git/.gitolite/hooks/common/update
+
+sed -i 's|#!/usr/bin/perl|\0\n\nBEGIN {\n  exit 0 if exists $ENV{GL_BYPASS_UPDATE_HOOK};\n}\n|' /home/git/.gitolite/hooks/common/update
+
+# mkdir -p /gitolite/src/lib/Gitolite/Hooks/
+# cat /tmp/gitolite-fix >> /gitolite/src/lib/Gitolite/Hooks/Update.pm
+# sed -i 's/{GL_BYPASS_UPDATE_HOOK}/$ENV{GL_BYPASS_UPDATE_HOOK}/' /gitolite/src/lib/Gitolite/Hooks/Update.pm
+
+sed -i 's|#!/usr/bin/perl|\0\n\nBEGIN {\n  exit 0 if exists $ENV{GL_BYPASS_UPDATE_HOOK};\n}\n|' /gitolite/src/lib/Gitolite/Hooks/Update.pm

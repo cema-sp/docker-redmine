@@ -44,100 +44,37 @@
 
 # Introduction
 
-Dockerfile to build a Redmine container image.
+Dockerfile to build a Redmine + Gitolite container image.  
+> Fork of [sameersbn/redmine]
 
 ## Version
 
-Current Version: **3.0.1**
+Current Version: **2.6.3**
 
-*P.S.: If your installation depends on various third party plugins, please stick with 2.6.xx series to avoid breakage.*
+## Installation ##
 
-# Contributing
+1. Make directories for: [repositories, logs, data]
+2. Clone docker image to production server
+3. Edit **docker-compose.yml** to match your requirements
+4. Generate **redmine.crt**, **redmine.key** and **dhparam.pem** files and copy them to `data/certs` [READ](#ssl)
+5. Copy content of `to_data` directory to `data` directory from p.1
+6. Run `sudo docker-compose up -d`
+7. Point your browser to `http://localhost:10080` and login using the default username and password:
 
-If you find this image useful here's how you can help:
+    * username: **admin**
+    * password: **admin**
 
-- Send a Pull Request with your awesome new features and bug fixes
-- Help new users with [Issues](https://github.com/sameersbn/docker-redmine/issues) they may encounter
-- Send me a tip via [Bitcoin](https://www.coinbase.com/sameersbn) or using [Gratipay](https://gratipay.com/sameersbn/)
+8. Configure next parameters:
 
-# Issues
+    * LDAP
+    * MODS
+    * Gitolite:
+      - SSH private key: /home/redmine/data/dotfiles/.ssh/redmine_gitolite_admin_id_rsa
+      - SSH public key: /home/redmine/data/dotfiles/.ssh/redmine_gitolite_admin_id_rsa.pub
+      - Access SSH server domain
+      - Access HTTP server domain
 
-Docker is a relatively new project and is active being developed and tested by a thriving community of developers and testers and every release of docker features many enhancements and bugfixes.
-
-Given the nature of the development and release cycle it is very important that you have the latest version of docker installed because any issue that you encounter might have already been fixed with a newer docker release.
-
-For ubuntu users I suggest [installing docker](https://docs.docker.com/installation/ubuntulinux/) using docker's own package repository since the version of docker packaged in the ubuntu repositories are a little dated.
-
-Here is the shortform of the installation of an updated version of docker on ubuntu.
-
-```bash
-sudo apt-get purge docker.io
-curl -s https://get.docker.io/ubuntu/ | sudo sh
-sudo apt-get update
-sudo apt-get install lxc-docker
-```
-
-Fedora and RHEL/CentOS users should try disabling selinux with `setenforce 0` and check if resolves the issue. If it does than there is not much that I can help you with. You can either stick with selinux disabled (not recommended by redhat) or switch to using ubuntu.
-
-If using the latest docker version and/or disabling selinux does not fix the issue then please file a issue request on the [issues](https://github.com/sameersbn/docker-redmine/issues) page.
-
-In your issue report please make sure you provide the following information:
-
-- The host distribution and release version.
-- Output of the `docker version` command.
-- Output of the `docker info` command.
-- The `docker run` command you used to run the image (mask out the sensitive bits).
-
-# Installation
-
-Pull the image from the docker index. This is the recommended method of installation as it is easier to update image in the future. These builds are performed by the Trusted Build service.
-
-```bash
-docker pull sameersbn/redmine:latest
-```
-
-Since version `2.4.2`, the image builds are being tagged. You can now pull a particular version of redmine by specifying the version number. For example,
-
-```bash
-docker pull sameersbn/redmine:3.0.1
-```
-
-Alternately you can build the image yourself.
-
-```bash
-git clone https://github.com/sameersbn/docker-redmine.git
-cd docker-redmine
-docker build --tag="$USER/redmine" .
-```
-
-# Quick Start
-
-You can launch the image using the docker command line,
-
-```bash
-docker run --name=redmine -it --rm -p 10080:80 \
--v /var/run/docker.sock:/run/docker.sock \
--v $(which docker):/bin/docker \
-sameersbn/redmine:3.0.1
-```
-
-Or you can use [fig](http://www.fig.sh/). Assuming you have fig installed,
-
-```bash
-wget https://raw.githubusercontent.com/sameersbn/docker-redmine/master/fig.yml
-fig up
-```
-
-*The rest of the document will use the docker command line. You can quite simply adapt your configuration into a fig.yml file if you wish to do so.*
-
-**NOTE**: Please allow a minute or two for the Redmine application to start.
-
-Point your browser to `http://localhost:10080` and login using the default username and password:
-
-* username: **admin**
-* password: **admin**
-
-You should now have the Redmine application up and ready for testing. If you want to use this image in production the please read on.
+9. You should now have the Redmine and Gitolite applications up and ready for testing. If you want to use this image in production the please read on.
 
 # Configuration
 
@@ -170,176 +107,16 @@ docker run --name=redmine -it --rm \
   -v /opt/redmine/data:/home/redmine/data sameersbn/redmine:3.0.1
 ```
 
-## Database
+## Database (PostgreSQL)
 
-Redmine uses a database backend to store its data.
+This image uses docker PostgreSQL database backend to store its data.
 
-### MySQL
-
-#### Internal MySQL Server
-
-The internal mysql server has been removed from the image. Please use a linked [mysql](#linking-to-mysql-container) or [postgresql](#linking-to-postgresql-container) container instead or connect with an external [mysql](#external-mysql-server) or [postgresql](#external-postgresql-server) server.
-
-If you have been using the internal mysql server follow these instructions to migrate to a linked mysql container:
-
-Assuming that your mysql data is available at `/opt/redmine/mysql`
-
-```bash
-docker run --name=mysql -d \
-  -v /opt/redmine/mysql:/var/lib/mysql \
-  sameersbn/mysql:latest
-```
-
-This will start a mysql container with your existing mysql data. Now login to the mysql container and create a user for the existing `redmine_production` database.
-
-All you need to do now is link this mysql container to the redmine container using the `--link mysql:mysql` option and provide the `DB_NAME`, `DB_USER` and `DB_PASS` parameters.
-
-Refer to [Linking to MySQL Container](#linking-to-mysql-container) for more information.
-
-#### External MySQL Server
-
-The image can be configured to use an external MySQL database instead of starting a MySQL server internally. The database configuration should be specified using environment variables while starting the Redmine image.
-
-Before you start the Redmine image create user and database for redmine.
-
-```sql
-mysql -uroot -p
-CREATE USER 'redmine'@'%.%.%.%' IDENTIFIED BY 'password';
-CREATE DATABASE IF NOT EXISTS `redmine_production` DEFAULT CHARACTER SET `utf8` COLLATE `utf8_unicode_ci`;
-GRANT SELECT, LOCK TABLES, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER ON `redmine_production`.* TO 'redmine'@'%.%.%.%';
-```
-
-We are now ready to start the redmine application.
-
-```bash
-docker run --name=redmine -it --rm \
-  -e "DB_HOST=192.168.1.100" -e "DB_NAME=redmine_production" \
-  -e "DB_USER=redmine" -e "DB_PASS=password" \
-  -v /opt/redmine/data:/home/redmine/data sameersbn/redmine:3.0.1
-```
-
-This will initialize the redmine database and after a couple of minutes your redmine instance should be ready to use.
-
-#### Linking to MySQL Container
-
-You can link this image with a mysql container for the database requirements. The alias of the mysql server container should be set to **mysql** while linking with the redmine image.
-
-If a mysql container is linked, only the `DB_TYPE`, `DB_HOST` and `DB_PORT` settings are automatically retrieved using the linkage. You may still need to set other database connection parameters such as the `DB_NAME`, `DB_USER`, `DB_PASS` and so on.
-
-To illustrate linking with a mysql container, we will use the [sameersbn/mysql](https://github.com/sameersbn/docker-mysql) image. When using docker-mysql in production you should mount a volume for the mysql data store. Please refer the [README](https://github.com/sameersbn/docker-mysql/blob/master/README.md) of docker-mysql for details.
-
-First, lets pull the mysql image from the docker index.
-
-```bash
-docker pull sameersbn/mysql:latest
-```
-
-For data persistence lets create a store for the mysql and start the container.
-
-SELinux users are also required to change the security context of the mount point so that it plays nicely with selinux.
-
-```bash
-mkdir -p /opt/mysql/data
-sudo chcon -Rt svirt_sandbox_file_t /opt/mysql/data
-```
-
-The run command looks like this.
-
-```bash
-docker run --name=mysql -d \
-  -e 'DB_NAME=redmine_production' -e 'DB_USER=redmine' -e 'DB_PASS=password' \
-  -v /opt/mysql/data:/var/lib/mysql \
-  sameersbn/mysql:latest
-```
-
-The above command will create a database named `redmine_production` and also create a user named `redmine` with the password `password` with full/remote access to the `redmine_production` database.
-
-We are now ready to start the redmine application.
-
-```bash
-docker run --name=redmine -it --rm --link mysql:mysql \
-  -v /opt/redmine/data:/home/redmine/data \
-  sameersbn/redmine:3.0.1
-```
-
-Here the image will also automatically fetch the `DB_NAME`, `DB_USER` and `DB_PASS` variables from the mysql container as they are specified in the `docker run` command for the mysql container. This is made possible using the magic of docker links and works with the following images:
-
- - [sameersbn/mysql](https://registry.hub.docker.com/u/sameersbn/mysql/)
- - [centurylink/mysql](https://registry.hub.docker.com/u/centurylink/mysql/)
- - [orchardup/mysql](https://registry.hub.docker.com/u/orchardup/mysql/)
-
-### PostgreSQL
-
-#### External PostgreSQL Server
-
-The image also supports using an external PostgreSQL Server. This is also controlled via environment variables.
-
+Configure Redmine database:  
 ```sql
 CREATE ROLE redmine with LOGIN CREATEDB PASSWORD 'password';
-CREATE DATABASE redmine_production;
-GRANT ALL PRIVILEGES ON DATABASE redmine_production to redmine;
+CREATE DATABASE redmine;
+GRANT ALL PRIVILEGES ON DATABASE redmine to redmine;
 ```
-
-We are now ready to start the redmine application.
-
-```bash
-docker run --name=redmine -it --rm \
-  -e "DB_TYPE=postgres" -e "DB_HOST=192.168.1.100" \
-  -e "DB_NAME=redmine_production" -e "DB_USER=redmine" -e "DB_PASS=password" \
-  -v /opt/redmine/data:/home/redmine/data \
-  sameersbn/redmine:3.0.1
-```
-
-This will initialize the redmine database and after a couple of minutes your redmine instance should be ready to use.
-
-#### Linking to PostgreSQL Container
-
-You can link this image with a postgresql container for the database requirements. The alias of the postgresql server container should be set to **postgresql** while linking with the redmine image.
-
-If a postgresql container is linked, only the `DB_TYPE`, `DB_HOST` and `DB_PORT` settings are automatically retrieved using the linkage. You may still need to set other database connection parameters such as the `DB_NAME`, `DB_USER`, `DB_PASS` and so on.
-
-To illustrate linking with a postgresql container, we will use the [sameersbn/postgresql](https://github.com/sameersbn/docker-postgresql) image. When using postgresql image in production you should mount a volume for the postgresql data store. Please refer the [README](https://github.com/sameersbn/docker-postgresql/blob/master/README.md) of docker-postgresql for details.
-
-First, lets pull the postgresql image from the docker index.
-
-```bash
-docker pull sameersbn/postgresql:latest
-```
-
-For data persistence lets create a store for the postgresql and start the container.
-
-SELinux users are also required to change the security context of the mount point so that it plays nicely with selinux.
-
-```bash
-mkdir -p /opt/postgresql/data
-sudo chcon -Rt svirt_sandbox_file_t /opt/postgresql/data
-```
-
-The run command looks like this.
-
-```bash
-docker run --name=postgresql -d \
-  -e 'DB_NAME=redmine_production' -e 'DB_USER=redmine' -e 'DB_PASS=password' \
-  -v /opt/postgresql/data:/var/lib/postgresql \
-  sameersbn/postgresql:latest
-```
-
-The above command will create a database named `redmine_production` and also create a user named `redmine` with the password `password` with access to the `redmine_production` database.
-
-We are now ready to start the redmine application.
-
-```bash
-docker run --name=redmine -it --rm --link postgresql:postgresql \
-  -v /opt/redmine/data:/home/redmine/data \
-  sameersbn/redmine:3.0.1
-```
-
-Here the image will also automatically fetch the `DB_NAME`, `DB_USER` and `DB_PASS` variables from the postgresql container as they are specified in the `docker run` command for the postgresql container. This is made possible using the magic of docker links and works with the following images:
-
- - [postgres](https://registry.hub.docker.com/_/postgres/)
- - [sameersbn/postgresql](https://registry.hub.docker.com/u/sameersbn/postgresql/)
- - [orchardup/postgresql](https://registry.hub.docker.com/u/orchardup/postgresql/)
- - [paintedfox/postgresql](https://registry.hub.docker.com/u/paintedfox/postgresql/)
 
 ## Memcached (Optional)
 

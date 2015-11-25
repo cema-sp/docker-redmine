@@ -1,7 +1,8 @@
 #!/bin/bash
+
 set -e
 
-REDMINE_VERSION=3.0.1
+REDMINE_VERSION=${REDMINE_VERSION:-"3.0.1"}
 INSTALL_DIR="/home/redmine/redmine"
 DATA_DIR="/home/redmine/data"
 LOG_DIR="/var/log/redmine"
@@ -10,7 +11,7 @@ SETUP_DIR="/app/setup"
 GEM_CACHE_DIR="${SETUP_DIR}/cache"
 
 # rebuild apt cache
-apt-get -q update
+apt-get -q -y update
 
 # install build dependencies
 apt-get install -y -q \
@@ -23,6 +24,7 @@ apt-get install -y -q \
   libxslt1-dev \
   libyaml-dev
 
+# --------------------- Redmine -----------------------------
 # add redmine user
 adduser --disabled-login --gecos 'Redmine' redmine
 passwd -d redmine
@@ -61,10 +63,10 @@ sed '/gem "pg"/d' -i Gemfile
 sed '/gem "mysql2"/d' -i Gemfile
 echo "${PG_GEM}" >> Gemfile
 
-
 # add gems for app server and memcache support
 echo 'gem "unicorn"' >> Gemfile
-echo 'gem "dalli", "~> 2.7.0"' >> Gemfile
+echo 'gem "dalli"' >> Gemfile
+# echo 'gem "dalli", "~> 2.7.0"' >> Gemfile
 
 # install gems, use cache if available
 if [ -d "${GEM_CACHE_DIR}" ]; then
@@ -184,6 +186,64 @@ cat > /etc/supervisor/conf.d/cron.conf <<EOF
 priority=20
 directory=/tmp
 command=/usr/sbin/cron -f
+user=root
+autostart=true
+autorestart=true
+stdout_logfile=${LOG_DIR}/supervisor/%(program_name)s.log
+stderr_logfile=${LOG_DIR}/supervisor/%(program_name)s.log
+EOF
+
+# --------------------- Gitolite -----------------------------
+
+# Create git user
+adduser --system --group --shell /bin/sh git
+usermod -a -G redmine git
+
+# Allow redmine user to act as git
+echo -e "Defaults:redmine !requiretty\nredmine ALL=(git) NOPASSWD:ALL" > /etc/sudoers.d/redmine
+chmod 440 /etc/sudoers.d/redmine
+
+# https://github.com/docker/docker/issues/5892
+chown -R git:git /gitolite /home/git
+
+cd /home/git
+
+# Always make sure the git user has a private key you may
+# use for mirroring setups etc.
+if [ ! -f /home/git/.ssh/id_rsa ]; then
+  su git -c "ssh-keygen -f /home/git/.ssh/id_rsa  -t rsa -N ''"
+  echo "Here is the public key of the container's 'git' user:"
+  cat /home/git/.ssh/id_rsa.pub
+fi
+
+# Support trusting hosts for mirroring setups.
+if [ ! -f /home/git/.ssh/known_hosts ]; then
+  if [ -n "$TRUST_HOSTS" ]; then
+    echo "Generating known_hosts file with $TRUST_HOSTS"
+    su git -c "ssh-keyscan -H $TRUST_HOSTS > /home/git/.ssh/known_hosts"
+  fi
+fi
+
+# configure sshd log rotation
+cat > /etc/logrotate.d/sshd <<EOF
+/var/log/auth.log {
+  weekly
+  missingok
+  rotate 52
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+}
+EOF
+
+# configure supervisord to start sshd
+cat > /etc/supervisor/conf.d/sshd.conf <<EOF
+[program:sshd]
+priority=10
+directory=/home/git
+environment=HOME=/home/git
+command=/usr/sbin/sshd -D
 user=root
 autostart=true
 autorestart=true

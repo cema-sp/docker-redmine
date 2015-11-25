@@ -1,0 +1,592 @@
+# encoding: utf-8
+el:
+  contacts_title: Επαφές
+
+  label_crm_recently_viewed: Προβλήθηκαν πρόσφατα
+  label_crm_gravatar_enabled: Χρήση Gravatar
+  label_crm_thumbnails_enabled: Show image thumbnails in notes
+  label_crm_max_thumbnail_file_size: Max thumbnailed image size
+  label_crm_view_all_contacts: Προβολή όλων των πελατών
+  label_crm_background_info: Πληροφορίες φόντου
+  label_crm_company: Εταιρεία
+  label_contact_plural: Επαφές
+  label_crm_contact_edit_information: Διόρθωση Πληροφοριών Επαφής
+  label_crm_edit_tags: Διόρθωση ετικετών
+  label_crm_contact_view: Προβολή
+  label_crm_contact_list: Λίστα
+  label_crm_contact_new: Νέα επαφή
+  label_crm_at_company: στη
+  label_crm_last_notes: Πρόσφατες σημειώσεις
+  label_crm_tags_plural: Ετικέτες
+  label_crm_multi_tags_plural: Επιλογή πολλαπλών ετικετών
+  label_crm_single_tag_mode: Μια ετικέτα
+  label_crm_multiple_tags_mode: Πολλαπλές ετικέτες
+  label_crm_contact_tag: Ετικέτα
+  label_crm_time_ago: πριν
+  label_crm_add_note_plural: Προσθήκη σημείωσης σε
+  label_crm_note_plural: Σημειώσεις
+
+  label_crm_add_tags_rule: διαχωρισμός με κόμματα
+  label_crm_contact_search: Αναζήτηση με όνομα
+  label_crm_note_for: Σημείωση για
+  label_crm_show_on_map: Προβολή σε χάρτη
+  label_crm_add_another_phone: προσθήκη τηλεφώνου
+  label_crm_remove: διαγραφή
+  label_crm_related_contacts: Σχετικές επαφές
+  label_crm_assigned_to: Υπεύθυνος
+  label_crm_issue_added: Το θέμα προστέθηκε
+  label_crm_add_emails_rule: διαχωρισμός με κόμματα
+  label_crm_add_phones_rule: διαχωρισμός με κόμματα
+  label_crm_add_employee: Νέος υπάλληλος
+  label_crm_merge_duplicate_plural: Συγχώνευση
+  label_crm_duplicate_plural: Πιθανά διπλότυπα
+  label_crm_duplicate_for_plural: Πιθανά διπλότυπα για
+  label_crm_add_tag: + προσθήκη ετικέτας
+
+  label_crm_note_show_extras: Για προχωρημένους (τύπος, ημερομηνία, αρχεία)
+  label_crm_note_hide_extras: Απόκρυψη προχωρημένων
+  label_crm_note_added: Η σημείωση προστέθηκε
+  label_crm_note_read_more: (διαβάστε περισσότερα)
+  label_crm_invoice_import: Εισαγωγή τιμολογίων από CSV
+
+  label_deal_plural: Συμφωνίες
+  label_crm_contractor_plural: Επαφές
+  label_deal: Συμφωνία
+  label_crm_deal_new: Νέα συμφωνία
+  label_crm_deal_edit_information: Αλλαγή στοιχείων συμφωνίας
+  label_crm_deal_change_status: Αλλαγή κατάστασης
+  label_crm_statistics: Στατιστικά
+  label_crm_deals_import: Εισαγωγή συμφωνιών από CSV
+
+  label_crm_deal_status_new: Νέα
+  label_crm_deal_status_first_contact: Πρώτη επαφή
+  label_crm_deal_status_negotiations: Διαπραγματεύσεις
+  label_crm_deal_status_pending: Εκκρεμεί
+  label_crm_deal_status_won: Κέρδισε
+  label_crm_deal_status_lost: Έχασε
+
+  label_crm_created_on: Δημιουργήθηκε στις
+
+  field_note_date: Ημερομηνία σημείωσης
+  field_background: Φόντο
+  field_currency: Νόμισμα
+  field_contact: Επαφή
+
+  field_deal_name: Όνομα
+  field_deal_background: Φόντο
+  field_deal_contact: Επαφή
+  field_deal_price: Σύνολο
+  field_price: Σύνολο
+
+  field_contact_avatar: Φωτογραφία
+  field_contact_is_company: Εταιρεία
+  field_contact_name: Όνομα
+  field_contact_last_name: Επώνυμο
+  field_contact_first_name: Όνομα
+  field_contact_middle_name: Μεσαίο όνομα
+  field_contact_job_title: Θέση
+  field_contact_company: Εταιρεία
+  field_contact_address: Διεύθυνση
+  field_contact_phone: Τηλέφωνο
+  field_contact_email: Email
+  field_contact_website: Ιστότοπος
+  field_contact_skype: Skype
+  field_contact_status: Κατάσταση
+  field_contact_background: Φόντο
+  field_contact_tag_names: Ετικέτες
+  field_first_name: Όνομα
+  field_last_name: Επώνυμο
+  field_company: Εταιρεία
+  field_birthday: Ημερομηνία γέννησης
+  field_contact_department: Τμήμα
+
+
+  field_company_field: Βιομηχανία
+
+  field_color: Χρώμα
+
+  button_add_note: Προσθήκη σημείωσης
+  notice_successful_save: Επιτυχής αποθήκευση
+  notice_successful_add: Επιτυχής δημιουργία
+  notice_unsuccessful_save: Προβλήματα αποθήκευσης
+  notice_successful_merged: Επιτυχής συγχώνευση
+
+  notice_merged_warning: Όλες οι σημειώσεις, έργα, ετικέτες και εργασίες που επισυνάπτονται σε αυτό το άτομο θα μετακινηθούν στην παρακάτω επιλογή. Μετά, η επαφή θα διαγραφεί.
+
+  project_module_contacts: Επαφές
+
+  permission_view_contacts: Προβολή επαφών
+  permission_edit_contacts: Διόρθωση επαφών
+  permission_delete_contacts: Διαγραφή επαφών
+  permission_view_deals: Προβολή συμφωνιών
+  permission_edit_deals: Διόρθωση συμφωνιών
+  permission_delete_deals: Διαγραφή συμφωνιών
+  permission_add_notes: Προβολή σημειώσεων
+  permission_delete_notes: Διόρθωση σημειώσεων
+  permission_delete_own_notes: Διαγραφή δικών μου σημειώσεων
+
+  # 2.0.0
+  label_crm_deal_category: Κατηγορία συμφωνίας
+  label_crm_deal_category_plural: Κατηγορίες συμφωνιών
+  label_crm_deal_category_new: Νέα κατηγορία
+  text_deal_category_destroy_assignments: Αφαίρεση αναθέσεων κατηγορίας
+  text_deal_category_destroy_question: "Ορισμένες συμφωνίες (%{count}) έχουν ανατεθεί σε αυτή την κατηγορία. Τι επιθυμείτε?"
+  text_deal_category_reassign_to: Επανεκχώρηση συμφωνιών σε αυτή την κατηγορία
+  text_deals_destroy_confirmation: 'Είστε σίγουρος/η οτι θέλετε να διαγραφεί η επιλεγμένη συμφωνία(ες);'
+  label_crm_deal_status_plural: Κατηγορίες συμφωνίας
+  label_crm_deal_status: Κατηγορία συμφωνίας
+  field_deal_status_is_closed: Κλειστή
+  label_crm_deal_status_new: Νέα
+  permission_manage_contacts: Διαχείριση επαφών
+  label_crm_sales_funnel: Συγκέντρωση πωλήσεων
+  label_crm_period: Περίοδος
+  label_crm_count: Αρίθμηση
+
+  #2.0.1
+  label_crm_user_format: Μορφή ονόματος επαφής
+  label_crm_my_contact_plural: Επαφές που έχουν ανατεθεί σε μένα
+  label_crm_my_deal_plural: Ανοικτές συμφωνίες που έχουν ανατεθεί σε μένα
+  label_crm_contact_view_all: Προβολή όλων των επαφών
+  label_crm_deal_view_all: Προβολή όλων των συμφωνιών
+
+  #2.0.2
+  label_crm_bulk_edit_selected_contacts: Διόρθωση όλων των επιλεγμένων επαφών
+  label_crm_bulk_edit_selected_deals: Διόρθωση όλων των επιλεγμένων συμφωνιών
+  label_crm_bulk_send_mail_selected_contacts: Send mail to selected επαφές
+  field_add_tags: Προσθήκη ετικετών
+  field_delete_tags: Διαγραφή ετικετών
+  label_crm_send_mail: Αποστολή mail
+  error_empty_email: Το email δε μπορεί να είναι κενό
+  permission_send_contacts_mail: Αποστολή mail
+  field_mail_from: Από διεύθυνση
+  text_email_macros: Διαθέσιμες μακροεντολές %{macro}
+  field_message: Μήνυμα
+
+  #2.0.3
+  label_crm_add_contact: Προσθήκη επαφής
+  label_contact: Επαφή
+  field_age: Ηλικία
+  label_crm_vcf_import: Εισαγωγή από vCard
+  label_crm_mail_from: Από
+  permission_import_contacts: Εισαγωγή επαφών
+
+  #2.1.0
+  field_company_name: Όνομα εταιρείας
+  label_crm_recently_added_contacts: Πρόσφατα προστιθέμενες επαφές
+  label_crm_created_by_me: Επαφές δημιουργημένες από εμένα
+  my_contacts: Οι επαφές μου
+  my_deals: Οι συμφωνίες μου
+
+  #2.2.0
+  label_crm_note_type_email: Email
+  label_crm_note_type_call: Κλήση
+  label_crm_note_type_meeting: Συνάντηση
+  field_deal_currency: Νόμισμα
+  label_crm_my_contacts_stats: Στατιστικά επαφών μήνα
+  label_crm_contacts_created: Δημιουργημένες επαφές
+  label_crm_deals_created: Δημιουργημένες συμφωνίες
+  my_contacts_avatars: Φωτογραφίες επαφών μου
+  my_contacts_stats: Στατιστικά επαφών
+  label_crm_add_into: Προσθήκη σε
+  label_crm_delete_from: Διαγραφή από
+  label_crm_show_deaks_tab: Εμφάνιση καρτέλας συμφωνιών
+  label_crm_show_on_projects_show: Εμφάνιση επαφών σε επισκόπηση έργων
+
+  #2.2.1
+  label_crm_contacts_show_in_list: Προβολή σε λίστα
+
+  #2.3.0
+  label_crm_module_plural: Ενότητες
+  label_crm_list_partial_style: Τύπος λίστας
+  label_crm_list_excerpt: Λίστα αποσπασμάτων
+  label_crm_list_cards: Κάρτες
+  label_crm_list_list: Πίνακας
+  field_contacts: Επαφή
+  field_companies: Εταιρεία
+  label_crm_added_by: Προστέθηκε από
+  label_crm_contact_note_authoring_time: Προβολή ώρας σημείωσης
+  label_crm_contact_issues_filters: Φίλτρα θεμάτων
+  label_crm_csv_import: Εισαγωγή από CSV
+  label_crm_upload_encoding: Κωδικοποίηση αρχείων
+  label_crm_csv_file: αρχείο CSV
+  label_crm_csv_separator: Διαχωριστής
+  field_middle_name: Μεσαίο όνομα
+  field_job_title: Θέση
+  field_company: Εταιρεία
+  field_address: Διεύθυνση
+  field_phone: Τηλέφωνο
+  field_email: Email
+  field_tags: Ετικέτες
+  field_last_note: Τελευταία σημείωση
+  field_is_company: Είναι εταιρεία
+  field_contact_full_name: Πλήρες όνομα
+  button_contacts_edit_query: Διόρθωση ερωτήματος
+  button_contacts_delete_query: Διαγραφή ερωτήματος
+  permission_manage_public_contacts_queries: Διαχείριση δημόσιων ερωτημάτων
+  permission_add_deals: Προσθήκη συμφωνιών
+  permission_add_contacts: Προσθήκη επαφών
+  permission_save_contacts_queries: Αποθήκευση ερωτημάτων
+
+  #2.3.3
+  label_crm_contact_show_in_app_menu: Προβολή καρτελών στο μενού εφαρμογής
+
+  #2.3.4
+  label_crm_contact_show_closed_issues: Προβολή κλειστών θεμάτων
+
+  #3.0.0
+  label_crm_import: Εισαγωγή
+  label_contact_note_plural: Σημειώσεις επαφής
+  label_deal_note_plural: Σημειώσεις συμφωνίας
+  label_crm_contact_all_note_plural: Όλες οι σημειώσεις
+  error_unable_delete_deal_status: Δεν ήταν δυνατή η διαγραφή κατάστασης συμφωνίας
+  label_crm_contacts_hidden: Κρυφές ρυθμίσεις
+
+  #3.1.0
+  label_crm_contact_added: Η επαφή προστέθηκε
+  label_crm_note_added: Η σημείωση προστέθηκε
+  label_crm_deal_added: Η συμφωνία προστέθηκε
+  label_crm_deal_updated: Η συμφωνία ενημερώθηκε
+  text_crm_contact_added: "Η επαφή %{name} προστέθηκε από %{author}."
+  text_crm_deal_added: "Η συμφωνία %{name} προστέθηκε από %{author}."
+  text_crm_deal_status_changed: "Συμφωνία status changed from %{old} to %{new}"
+  text_crm_deal_updated: "Συμφωνία %{name} has been updated by %{author}."
+  label_crm_contacts_cc: Cc
+  label_crm_contacts_bcc: Bcc
+  label_crm_contact_import: Εισαγωγή από CSV
+  permission_import_deals: Εισαγωγή συμφωνιών
+  label_crm_single_quotes: "Μονά εισαγωγικά (')"
+  label_crm_double_quotes: "Διπλά εισαγωγικά (\")"
+  label_crm_quotes_type: Τύπος εισαγωγικών
+  label_crm_contacts_visibility: Ορατότητα
+  label_crm_contacts_visibility_project: Ανα δικαιώματα έργων
+  label_crm_contacts_visibility_public: Δημόσιο
+  label_crm_contacts_visibility_private: Ιδιωτικό
+  permission_view_private_contacts: Προβολή ιδιωτικών επαφών
+  text_crm_error_on_line: 'Σφάλμα στη γραμμή %{line}: %{error}.'
+
+  #3.2.0
+  label_crm_probability: Πιθανότητα
+  label_crm_deal_status_type: Τύπος κατάστασης
+  label_crm_select_companies: Φιλτράρισμα εταιρειών σε συμφωνίες
+  label_crm_expected_revenue: Αναμενόμενα έσοδα
+  label_crm_deal_due_date: Ημερομηνία λήξης
+
+  #3.2.2
+  label_crm_show_deals_in_top_menu: Προβολή συμφωνιών στο πάνω μενού
+  label_crm_show_details: Προβολή λεπτομερειών
+  label_crm_has_deals: Έχει συμφωνίες
+  label_crm_has_open_issues: Ανοικτά θέματα
+  label_crm_note: Σημείωση
+
+  #3.2.5
+  notice_failed_to_save_contacts: "Αδυναμία αποθήκευσης %{count} συμφωνίας(ων) από %{total} επιλεγμένες: %{ids}."
+
+  #3.2.6
+  project_module_deals: Συμφωνίες
+  permission_manage_deals: Διαχείριση συμφωνιών
+  label_crm_deals_from_subprojects: Προβολή συμφωνιών από υποέργα
+  label_crm_megre_tags: Συγχώνευση ετικετών
+  label_crm_monochrome_tags: Μονόχρωμες ετικέτες
+
+  #3.2.7
+  label_crm_address: Διεύθυνση
+  label_crm_street1: Δρόμος 1
+  label_crm_street2: Δρόμος 2
+  label_crm_city: Πόλη
+  label_crm_region: 'Περιοχή'
+  label_crm_postcode: 'ΤΚ'
+  label_crm_country: Χώρα
+  label_crm_countries:
+    AF: Αφγανιστάν
+    AL: Αλβανία
+    DZ: Αλγερία
+    AS: Αμερικανική Σαμόα
+    AD: Ανδόρα
+    AO: Ανγκόλα
+    AI: Ανγκουίλα
+    AQ: Ανταρκτική
+    AG: Αντίγκουα και Μπαρμπούντα
+    AR: Αργεντινή
+    AM: Αρμενία
+    AW: Αρούμπα
+    AU: Αυστραλία
+    AT: Αυστρία
+    AZ: Αζερμπαϊτζάν
+    BS: Μπαχάμες
+    BH: Μπαχρέιν
+    BD: Μπανγκλαντές
+    BB: Μπαρμπάντος
+    BY: Λευκορωσία
+    BE: Βέλγιο
+    BZ: Μπελίζ
+    BJ: Μπένιν
+    BM: Βερμούδες
+    BT: Μπουτάν
+    BO: Βολιβία
+    BA: Βοσνία - Ερζεγοβίνη
+    BW: Μποτσουάνα
+    BV: Νήσος Μπουβέ
+    BR: Βραζιλία
+    BQ: Βρετανικά Έδάφη Ανταρκτικής
+    IO: Βρετανικά Έδάφη Ινδικού Ωκεανού
+    VG: Βρετανικές Παρθένοι Νήσοι
+    BN: Μπρουνέι Νταρουσαλάμ
+    BG: Βουλγαρία
+    BF: Μπουρκίνα Φάσο
+    BI: Μπουρούντι
+    KH: Καμπότζη
+    CM: Καμερούν
+    CA: Καναδάς
+    CT: Canton and Enderbury Islands
+    CV: Νήσοι Πράσινου Ακρωτηρίου
+    KY: Νήσοι Κέιμαν
+    CF: Κεντροαφρικανική Δημοκρατία
+    TD: Τσαντ
+    CL: Χιλή
+    CN: Κίνα
+    CX: Νήσος Χριστουγέννων
+    CC: Νήσοι Κόκος (Κήλινγκ)
+    CO: Κολομβία
+    KM: Κομόρες
+    CG: Κονγκό
+    CD: Κονγκό, Λαϊκή Δημοκρατία του
+    CK: Νήσοι Κουκ
+    CR: Κόστα Ρίκα
+    HR: Κροατία
+    CU: Κούβα
+    CY: Κύπρος
+    CZ: Τσεχία
+    CI: Ακτή Ελεφαντόδοντος
+    DK: Δανία
+    DJ: Τζιμπουτί
+    DM: Ντομίνικα
+    DO: Δομινικανή Δημοκρατία
+    NQ: Dronning Maud Land
+    DD: Ανατολική Γερμανία
+    EC: Ισημερινός
+    EG: Αίγυπτος
+    SV: Ελ Σαλβαδόρ
+    GQ: Ισημερινή Γουινέα
+    ER: Ερυθραία
+    EE: Εσθονία
+    ET: Αιθιοπία
+    FK: Νήσοι Φώκλαντ
+    FO: Νήσοι Φερόες
+    FJ: Φίτζι
+    FI: Φινλανδία
+    FR: Γαλλία
+    GF: Γαλλική Γουιάνα
+    PF: Γαλλική Πολυνησία
+    TF: Γαλλικά Νότια Εδάφη
+    FQ: French Southern and Antarctic Territories
+    GA: Γκαμπόν
+    GM: Γκάμπια
+    GE: Γεωργία
+    DE: Γερμανία
+    GH: Γκάνα
+    GI: Γιβραλτάρ
+    GR: Ελλάδα
+    GL: Γροιλανδία
+    GD: Γρενάδα
+    GP: Γουαδελούπη
+    GU: Γκουάμ
+    GT: Γουατεμάλα
+    GG: Guernsey
+    GN: Γουινέα
+    GW: Γουινέα-Μπισάου
+    GY: Γουιάνα
+    HT: Αϊτή
+    HM: Νήσοι Χερντ και Μακντόναλντ
+    HN: Ονδούρα
+    HK: Χονγκ Κονγκ, Ειδική Διοικητική Περιφέρεια της Κίνας
+    HU: Ουγγαρία
+    IS: Ισλανδία
+    IN: Ινδία
+    ID: Ινδονησία
+    IR: Ιράν, Ισλαμική Δημοκρατία του
+    IQ: Ιράκ
+    IE: Ιρλανδία
+    IM: Isle of Man
+    IL: Ισραήλ
+    IT: Ιταλία
+    JM: Τζαμάικα
+    JP: Ιαπωνία
+    JE: Jersey
+    JT: Johnston Island
+    JO: Ιορδανία
+    KZ: Καζακστάν
+    KE: Κένυα
+    KI: Κιριμπάτι
+    KW: Κουβέιτ
+    KG: Κιργιζία
+    LA: Λατινική Αμερική
+    LV: Λετονία
+    LB: Λίβανος
+    LS: Λεσότο
+    LR: Λιβερία
+    LY: Λιβύη
+    LI: Λιχτενστάιν
+    LT: Λιθουανία
+    LU: Λουξεμβούργο
+    MO: Μακάο, Ειδική Διοικητική Περιφέρεια της Κίνας
+    MK: ΠΓΔ Μακεδονίας
+    MG: Μαδαγασκάρη
+    MW: Μαλάουι
+    MY: Μαλαισία
+    MV: Μαλδίβες
+    ML: Μάλι
+    MT: Μάλτα
+    MH: Νήσοι Μάρσαλ
+    MQ: Μαρτινίκα
+    MR: Μαυριτανία
+    MU: Μαυρίκιος
+    YT: Μαγιότ
+    FX: Metropolitan France
+    MX: Μεξικό
+    FM: Μικρονησία, Ομόσπονδες Πολιτείες της
+    MI: Midway Islands
+    MD: Μολδαβία, Δημοκρατία της
+    MC: Μονακό
+    MN: Μογγολία
+    ME: Montenegro
+    MS: Μονσεράτ
+    MA: Μαρόκο
+    MZ: Μοζαμβίκη
+    MM: Μιανμάρ
+    NA: Ναμίμπια
+    NR: Ναούρου
+    NP: Νεπάλ
+    NL: Ολλανδία
+    AN: Ολλανδικές Αντίλλες
+    NT: Neutral Zone
+    NC: Νέα Καληδονία
+    NZ: Νέα Ζηλανδία
+    NI: Νικαράγουα
+    NE: Νίγηρ
+    NG: Νιγηρία
+    NU: Νιούε
+    NF: Νήσος Νόρφολκ
+    KP: Κορέα, Βόρεια
+    VD: North Vietnam
+    MP: Νήσοι Βόρειες Μαριάνες
+    NO: Νορβηγία
+    OM: Ομάν
+    PC: Pacific Islands Trust Territory
+    PK: Πακιστάν
+    PW: Παλάου
+    PS: Παλαιστινιακά Εδάφη
+    PA: Παναμάς
+    PZ: Panama Canal Zone
+    PG: Παπούα - Νέα Γουινέα
+    PY: Παραγουάη
+    YD: People's Democratic Republic of Yemen
+    PE: Περού
+    PH: Φιλιππίνες
+    PN: Πίτκερν
+    PL: Πολωνία
+    PT: Πορτογαλία
+    PR: Πουέρτο Ρίκο
+    QA: Κατάρ
+    RO: Ρουμανία
+    RU: Ρωσία
+    RW: Ρουάντα
+    RE: Ρεϋνιόν
+    BL: Saint Barthelemy
+    SH: Αγία Ελένη
+    KN: Σαιντ Κιτς και Νέβις
+    LC: Αγία Λουκία
+    MF: Saint Martin
+    PM: Σαιντ Πιέρ και Μικελόν
+    VC: Άγιος Βικέντιος και Γρεναδίνες
+    WS: Σαμόα
+    SM: Άγιος Μαρίνος
+    SA: Σαουδική Αραβία
+    SN: Σενεγάλη
+    RS: Serbia
+    CS: Σερβία και Μαυροβούνιο
+    SC: Σεϋχέλλες
+    SL: Σιέρα Λεόνε
+    SG: Σιγκαπούρη
+    SK: Σλοβακία
+    SI: Σλοβενία
+    SB: Νήσοι Σολομώντος
+    SO: Σομαλία
+    ZA: Νότια Αφρική
+    GS: Νότια Γεωργία και Νήσοι Νότιες Σάντουιτς
+    KR: Κορέα, Νότια
+    ES: Ισπανία
+    LK: Σρι Λάνκα
+    SD: Σουδάν
+    SR: Σουρινάμ
+    SJ: Νήσοι Σβάλμπαρ και Γιαν Μαγιέν
+    SZ: Σουαζιλάνδη
+    SE: Σουηδία
+    CH: Ελβετία
+    SY: Συρία, Αραβική Δημοκρατία της
+    ST: Σάο Τομέ και Πρίνσιπε
+    TW: Ταϊβάν
+    TJ: Τατζικιστάν
+    TZ: Τανζανία
+    TH: Ταϊλάνδη
+    TL: Ανατολικό Τιμόρ
+    TG: Τόγκο
+    TK: Τοκελάου
+    TO: Τόνγκα
+    TT: Τρινιδάδ και Τομπάγκο
+    TN: Τυνησία
+    TR: Τουρκία
+    TM: Τουρκμενιστάν
+    TC: Νήσοι Τερκς και Κάικος
+    TV: Τουβαλού
+    UM: Απομακρυσμένες Νησίδες των Ηνωμένων Πολιτειών
+    PU: U.S. Miscellaneous Pacific Islands
+    VI: Αμερικανικές Παρθένοι Νήσοι
+    UG: Ουγκάντα
+    UA: Ουκρανία
+    SU: Union of Soviet Socialist Republics
+    AE: Ηνωμένα Αραβικά Εμιράτα
+    GB: Ηνωμένο Βασίλειο
+    US: Ηνωμένες Πολιτείες
+    ZZ: Unknown or Invalid Region
+    UY: Ουρουγουάη
+    UZ: Ουζμπεκιστάν
+    VU: Βανουάτου
+    VA: Αγία Έδρα (Βατικανό)
+    VE: Βενεζουέλα
+    VN: Βιετνάμ
+    WK: Wake Island
+    WF: Νήσοι Ουαλλίς και Φουτουνά
+    EH: Δυτική Σαχάρα
+    YE: Υεμένη
+    ZM: Ζάμπια
+    ZW: Ζιμπάμπουε
+    AX: Νήσοι Aland
+  label_crm_cross_project_contacts: Να επιτρέπονται επαφές ανάμεσα σε έργα
+  label_crm_list_board: Πίνακας
+  label_crm_default_list_style: Προεπιλεγμένο στυλ λίστας
+  label_crm_show_in_top_menu: Προβολή στο πάνω μενού
+  label_crm_show_in_app_menu: Προβολή στο μενού εφαρμογής
+  label_crm_money_settings: Χρήματα
+  label_crm_disable_taxes: Απενεργοποίηση φόρου
+  label_crm_default_tax: Προεπιλεγμένη τιμή φόρου
+  label_crm_tax_type: Είδος φόρου
+  label_crm_tax_type_inclusive: Με φόρο
+  label_crm_tax_type_exclusive: Χωρίς φόρο
+  label_crm_default_currency: Προεπιλεγμένο νόμισμα
+  label_crm_thousands_delimiter: Οριοθέτηση χιλιάδων
+  label_crm_decimal_separator: Διαχωριστής δεκαδικών ψηφίων
+
+  #3.2.10
+  label_crm_add_contact_plural: Προσθήκη επαφών
+  label_crm_search_for_contact: Αναζήτηση επαφής
+  label_crm_major_currencies: Κυριότερα νομίσματα
+
+  #3.2.11
+  label_crm_post_address_format: Μορφή διεύθυνσης αποστολής
+  label_crm_post_address_format_macros: "Μακροεντολές μορφής διεύθυνσης: %{macros}"
+
+  #3.2.14
+  label_crm_last_year: πέρυσι
+
+  #3.2.15
+  permission_export_contacts: Εξαγωγή επαφών και συμφωνιών

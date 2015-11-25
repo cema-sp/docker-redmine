@@ -1,0 +1,5 @@
+<%= form_for @note, :as => :note, :remote => true, :url => add_note_url(note_source, @project), :html => {:multipart => true, :id => "add_note_form"} do |f| %>
+  <%= render :partial => 'notes/form', :locals => {:f => f, :ajax_form => true}  %>
+
+  <%= submit_tag l(:button_add_note), :id => "submit_add_note_form", :class => "button-small" %>
+<% end %>

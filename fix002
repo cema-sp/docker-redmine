@@ -1,0 +1,2 @@
+# Fix branches display
+sed -r -i 's/(.*\.contextual select .*)/\/\* \1 \*\//' ./public/stylesheets/application.css | grep -i ".contextual select"

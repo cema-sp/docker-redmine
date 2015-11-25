@@ -1,0 +1,6 @@
+<h2><%= l(:label_query_new) %></h2>
+
+<%= form_tag(@project ? project_crm_queries_path(@project, :object_type => @object_type) : crm_queries_path(:object_type => @object_type), :onsubmit => 'selectAllOptions("selected_columns");') do %>
+  <%= render :partial => 'queries/form', :locals => {:query => @query} %>
+  <%= submit_tag l(:button_save) %>
+<% end %>
